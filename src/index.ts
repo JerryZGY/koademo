@@ -5,7 +5,13 @@ const port = 3000;
 
 app.use(async (ctx, next) => {
     // 要求資料
-    // fetchData( );
+    fetchData((err, data) => {
+        if (err) {
+            console.error(err);
+        } else {
+            console.info(data);
+        }
+    });
     //           ↑ 填入你的 callback function
     // 並在 callback function 中，利用 console.log 印出取得的 data
 });
