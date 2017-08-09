@@ -5,28 +5,25 @@ const port = 3000;
 
 app.use(async (ctx, next) => {
     // 要求資料
-    // fetchData((err, data) => {
-    //     if (err) {
-    //         console.error(err);
-    //     } else {
-    //         console.info(data);
-    //     }
-    // });
-    fetchDataPromise().then((data) => console.info(data));
+    fetchDataPromise()
+        .then((data) => plusPromise(data))
+        .then((ans) => console.info(ans));
 });
-
-function fetchData(callback: (error: any, data: number) => void) {
-    // 模擬網路傳輸，一秒後才會呼叫你的 callback
-    setTimeout(() => {
-        callback(null, 123);
-    }, 1000);
-}
 
 function fetchDataPromise() {
     return new Promise<number>((resolve) => {
         setTimeout(() => {
             resolve(123);
         }, 1000);
+    });
+}
+
+function plusPromise(data: number) {
+    const ans = data + 1;
+    return new Promise<number>((resolve) => {
+        setTimeout(() => {
+            resolve(ans);
+        }, 500);
     });
 }
 
