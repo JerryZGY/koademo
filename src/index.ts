@@ -5,15 +5,14 @@ const port = 3000;
 
 app.use(async (ctx, next) => {
     // 要求資料
-    fetchData((err, data) => {
-        if (err) {
-            console.error(err);
-        } else {
-            console.info(data);
-        }
-    });
-    //           ↑ 填入你的 callback function
-    // 並在 callback function 中，利用 console.log 印出取得的 data
+    // fetchData((err, data) => {
+    //     if (err) {
+    //         console.error(err);
+    //     } else {
+    //         console.info(data);
+    //     }
+    // });
+    fetchDataPromise().then((data) => console.info(data));
 });
 
 function fetchData(callback: (error: any, data: number) => void) {
@@ -21,6 +20,14 @@ function fetchData(callback: (error: any, data: number) => void) {
     setTimeout(() => {
         callback(null, 123);
     }, 1000);
+}
+
+function fetchDataPromise() {
+    return new Promise<number>((resolve) => {
+        setTimeout(() => {
+            resolve(123);
+        }, 1000);
+    });
 }
 
 app.listen(port, () => {
