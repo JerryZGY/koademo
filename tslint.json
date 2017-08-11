@@ -22,7 +22,7 @@
       }
     ],
     "no-console": [
-      true,
+      false,
       "log"
     ],
     "no-inferrable-types": true,
