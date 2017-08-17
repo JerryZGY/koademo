@@ -1,4 +1,4 @@
-import * as koa from 'koa';
+import * as koa from 'Koa';
 
 const app = new koa();
 const port = 3000;

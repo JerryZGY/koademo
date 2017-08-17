@@ -1,32 +1,27 @@
-import * as koa from 'koa';
+import * as Koa from 'koa';
+import * as logger from 'koa-logger';
+import * as Router from 'koa-router';
 
-const app = new koa();
-const port = 3000;
-
-app.use(async (ctx, next) => {
-    // 要求資料
-    fetchDataPromise()
-        .then((data) => plusPromise(data))
-        .then((ans) => console.info(ans));
+const app = new Koa();
+const router = new Router();
+const port = 80;
+// route
+router.get('/:id', async (ctx) => {
+  const mes = 'Hello koa-router path in "/"';
+  console.info(ctx.params);
+  ctx.body = mes;
 });
 
-function fetchDataPromise() {
-    return new Promise<number>((resolve) => {
-        setTimeout(() => {
-            resolve(123);
-        }, 1000);
-    });
-}
+router.get('/name/:name', async (ctx) => {
+  const mes = `Hello ${ctx.params.name} path in "/name"`;
+  console.info(ctx.params);
+  ctx.body = mes;
+});
 
-function plusPromise(data: number) {
-    const ans = data + 1;
-    return new Promise<number>((resolve) => {
-        setTimeout(() => {
-            resolve(ans);
-        }, 500);
-    });
-}
-
-app.listen(port, () => {
+app
+  .use(logger())       // 當middleware紀錄
+  .use(router.routes())  // 先檢查路徑，koa-router 會內建自訂next
+  .use(router.allowedMethods()) // 允許router以什麼方式跟server溝通
+  .listen(port, () => {
     console.info('Server started at port:', port);
-});
+  });
