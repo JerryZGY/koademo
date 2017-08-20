@@ -1,6 +1,6 @@
-import * as koa from 'Koa';
+import * as Koa from 'Koa';
 
-const app = new koa();
+const app = new Koa();
 const port = 3000;
 
 app.use(async () => {
